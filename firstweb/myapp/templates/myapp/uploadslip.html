@@ -1,0 +1,80 @@
+{% extends 'myapp/base.html' %}
+{% load humanize %} 
+
+{% block content %}
+
+    <div class="card border border-success">
+        <div class ="card-header text-center bg-success text-white f-h1" style="font-size: 2rem;">       
+            
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            อัพโหลดสลิป
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </div>
+        <div class="card-body">
+
+                <table class="table table-hover">
+                        <thead class="thead-dark">
+                          <tr>
+                            <!-- <th scope="col" class="f-h1">รายการ</th> -->
+                            <th scope="col" class="f-h1">เลขที่ออร์เดอร์</th>
+                            <th scope="col" class="f-h1">รูปแบบการจัดส่ง</th>
+                            <th scope="col" class="f-h1">จำนวนสินค้า</th>
+                            <th scope="col" class="f-h1">ยอดรวมสินค้าทั้งหมด</th>
+                            <th scope="col" class="f-h1">ค่าจัดส่ง</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <!-- <th scope="row">1</th> -->
+                            <td class="f-h3">{{ orderid }}</td>
+                            <td class="f-h3">{{ oddetail.shipping }}</td>
+                            <td class="f-h3 text-center">{{ count }}</td>
+                            <td class="f-h3 text-center">{{ total | intcomma }} </td>
+                            <td class="f-h3 text-center">{{ shipcost }} </td>
+                           
+                            
+                          </tr>
+                        </tbody>
+                      </table>
+
+            <p class="f-h3 text-danger">
+                หมายเหตุ :  &nbsp; >>> &nbsp; 
+                {% if oddetail.payment == 'cod' %}
+                    ถ้าเลือกจ่ายเงิน แบบเก็บเงินปลายทาง จะเสียค่าบริการ 20 บาท <br>
+                {% endif %}
+               
+                <h3 class="f-h3 text-center">รวมสินค้าทั้งหมดและค่าส่งเป็นเงิน : {{ grandtotal | intcomma }} บาท</h3>
+
+            </p>
+
+            {% if oddetail.slip %}
+                <img src="{{ oddetail.slip.url }}" style="width: 200px; height:300px; " class="rounded mx-auto d-block"  >
+            {% else %}        
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+            
+                    <div class="form-group">
+                        <label for="sliptime" class="bg-primary f-h3" style="font-size: 1.5rem;">วันเวลาที่โอน:</label>
+                        <input type="text" class="form-control" id="sliptime" name="sliptime" placeholder ="ตัวอย่างเช่น 2020/04/15 18:00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="slip" class="bg-warning f-h3" style="font-size: 1.5rem;">ไฟล์สลิปโอนเงิน:</label>
+                        <input type="file" class="form-control" id="slip" name="slip">
+                    </div>
+
+                    
+
+                    <button type="submit" class="btn btn-info f-h3" style="font-size: 1.5rem;"><i class="fa fa-download" style="font-size: 1.5rem;"></i> บันทึก</button>
+                </form>
+                {% endif %}
+        </div>
+        
+
+    </div>
+
+  
+</div>
+
+{% endblock content %}

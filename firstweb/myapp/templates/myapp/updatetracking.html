@@ -1,0 +1,32 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+    <div class="card border border-success">
+        <div class ="card-header text-center bg-primary text-white f-h1" style="font-size: 2rem;">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+             อัพเดทเลขพัสดุ
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </div>
+        <div class="card-body">
+         <p class="f-h3" style="font-size: 30px;"> <span class="badge badge-success">Orderid :</span> <span class="badge badge-danger f-h1">{{ orderid }}</span></p>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="trackingnumber" class="bg-warning f-h3" style="font-size: 1.5rem;">เลขพัสดุ / EMS /ลงทะเบียน :</label>
+                    <input type="text" class="form-control" id="trackingnumber" name="trackingnumber">
+                </div>
+
+
+                <button type="submit" class="btn btn-secondary f-h3"><i class="fa fa-plane" style="font-size: 1.5rem;"></i> บันทึก</button>
+            </form>
+        </div>
+        
+
+    </div>
+
+  
+</div>
+
+{% endblock content %}

@@ -1,0 +1,96 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+  
+<div class="card border border-warning">
+  <div class="card-body">
+    <div class="card-header text-center bg-info text-white text-center f-h1" style="font-size: 2rem;"> <i class="fa fa-shopping-cart"></i> สินค้าทั้งหมดภายในร้าน <i class="fa fa-shopping-cart"></i></div>
+
+  
+      <div class="row mt-4">
+        {% for pd in product %}
+        <div class="col-sm-4 mb-2">
+          <div class="card-deck">
+            <div class="card border-success" style="height: 30rem;">
+                {% if pd.image %}
+                  <img src="{{ pd.image.url }}" class="img-fluid mt-3 rounded mx-auto d-block"style="width: 10rem;">
+                {% elif pd.imageurl != None %}
+                  <img src="{{ pd.imageurl }}" class="img-fluid mt-3 rounded mx-auto d-block"style="width: 10rem;">
+                {% else %}
+                  <img src="/media/default.png" class="img-fluid mt-3 rounded mx-auto d-block"style="width: 14rem;">
+                {% endif %}
+              <div class="card-body">
+                <h5 class="card-title f-h1">{{ pd.name }}</h5>
+                <p class="card-text text-danger f-h3">ราคา {{ pd.price }} บาท / {{ pd.unit }}</p>
+                    <p class="card-text f-h3" style="font-size: 17px;">{{ pd.detail|truncatechars_html:50 }}</p>
+                      {% if pd.quantity > 0 %}
+                        <p class="card-text text-success f-h3">สินค้าในสต๊อก : {{ pd.quantity }} {{ pd.unit }}</p>
+                      {% else %}
+                        <p class="card-text text-warning f-h3">สินค้าอาจจะหมดสต๊อก กรุณาติดต่อแอดมิน</p>
+                      {% endif %}
+              
+                      {% if pd.instock == True %}
+
+                            {% if user.is_authenticated %}
+                              <a href="{% url 'addtocart-page' pd.id %}" class="btn btn-primary f-h3"><i class="fa fa-shopping-cart"></i> สั่งซื้อ</a>
+                            {% else %}
+                              <a href="{% url 'login' %}" class="btn btn-primary f-h3"><i class="fa fa-shopping-cart"></i> สั่งซื้อ</a>
+                            {% endif %}
+                        
+                            {% else %}
+                        <a href="#" class="btn btn-danger f-h3"><i class="fa fa-times-circle"></i> สินค้าหมดแล้ว</a>
+                      {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+                
+        {% endfor %}
+        
+
+             
+        
+ 
+
+      </div><br><br>
+
+        {% if product.paginator.num_pages > 1 %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm justify-content-center f-h3">
+                    {% if product.paginator.num_pages != 1 %}
+                        <li class="page-item"><a class="page-link" href="?page=1">หน้าแรก</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">หน้าแรก</a></li>
+                    {% endif %}
+                    {% if product.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{ product.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                    {% endif %}
+                    {% for i in product.paginator.page_range %}
+                        {% if product.number == i %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+                        {% elif product.number > i|add:"-3" and product.number < i|add:"+3"%}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if product.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ product.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                    {% endif %}
+                    {% if product.paginator.num_pages != product.number %}
+                        <li class="page-item"><a class="page-link" href="?page={{ product.paginator.num_pages }}">หน้าสุดท้าย</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">หน้าสุดท้าย</a></li>
+                    {% endif %}
+                </ul> <p class="text-center f-h1 text-danger">หน้า {{ product.number }} จาก {{ product.paginator.num_pages}}</p>
+            </nav>
+        {% endif %}
+        
+
+      
+    </div>
+  </div>
+    
+{% endblock content %}

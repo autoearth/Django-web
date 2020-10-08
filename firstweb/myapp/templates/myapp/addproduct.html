@@ -1,0 +1,61 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+    <div class="card border border-success">
+        <div class ="card-header text-center bg-success text-white f-h1" style="font-size: 2rem;">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            เพิ่มรายการสินค้า
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </div>
+        <div class="card-body">
+         <p>คุณสามารถเพิ่มรายการสินค้าในระบบได้ (เฉพาะแอดมิน)</p>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="name" class="bg-warning f-h3" style="font-size: 1.5rem;">ชื่อสินค้า:</label>
+                <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="form-group">
+                <label for="price" class="bg-secondary f-h3" style="font-size: 1.5rem;" >ราคา:</label>
+                <input type="text" class="form-control" id="price" name="price">
+                </div>
+
+                <div class="form-group">
+                    <label for="detail" class="bg-info f-h3" style="font-size: 1.5rem;">รายละเอียด:</label>
+                    <textarea class="form-control" rows="5" id="detail" name="detail"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageurl" class="bg-danger f-h3" style="font-size: 1.5rem;">รูปภาพ_url:</label>
+                    <input type="text" class="form-control" id="imageurl" name="imageurl">
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity" class="bg-primary f-h3" style="font-size: 1.5rem;">จำนวนสินค้า:</label>
+                    <input type="text" class="form-control" id="quantity" name="quantity">
+                </div>
+
+                <div class="form-group">
+                    <label for="unit" class="bg-success f-h3" style="font-size: 1.5rem;">หน่วยสินค้า:</label>
+                    <input type="text" class="form-control" id="unit" name="unit">
+                </div>
+
+                <div class="form-group">
+                    <label for="imageupload" class="bg-warning f-h3" style="font-size: 1.5rem;">เลือกรูปจากเครื่อง:</label>
+                    <input type="file" class="form-control" id="imageupload" name="imageupload">
+                </div>
+
+                
+
+                <button type="submit" class="btn btn-primary f-h3">Submit</button>
+            </form>
+        </div>
+        
+
+    </div>
+
+  
+</div>
+
+{% endblock content %}

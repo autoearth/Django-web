@@ -1,0 +1,50 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+    <div class="card border border-success">
+        <div class ="card-header text-center bg-primary text-white f-h1" style="font-size: 2rem;">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            การลงทะเบียน
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </div>
+        <div class="card-body">
+         <p>กรุณากรอกข้อมูลเพื่อสมัครสมาชิกในระบบ</p>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="first_name" class="bg-warning f-h3" style="font-size: 1.5rem;">ชื่อ :</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name">
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name" class="bg-secondary f-h3" style="font-size: 1.5rem;" >นามสกุล:</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="bg-danger f-h3" style="font-size: 1.5rem;" >อีเมล์:</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="bg-success f-h3" style="font-size: 1.5rem;" >รหัสผ่าน:</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+
+    
+
+                
+
+                <button type="submit" class="btn btn-info f-h3"><i class="fa fa-plane"></i> สมัครสมาชิก</button>
+            </form>
+        </div>
+        
+
+    </div>
+
+  
+</div>
+
+{% endblock content %}

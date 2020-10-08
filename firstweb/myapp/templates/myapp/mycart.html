@@ -1,0 +1,84 @@
+{% extends 'myapp/base.html' %}
+{% load humanize %} 
+
+{% block content %}
+  <div class="card border border-success">
+    <div class="card-body">
+
+        {% if status == 'delete' %}
+            <div class="alert alert-danger f-h3" role="alert">
+              <strong>ได้ทำการลบสินค้าเรียบร้อยแล้ว</strong> >>>> หากต้องการสินค้าเพิ่ม กรุณาสั่งซื้อใหม่ครับ <i class="fa fa-shopping-cart"></i><i class="fa fa-shopping-cart"></i><i class="fa fa-shopping-cart"></i>
+            </div>
+        
+        {% endif %}
+      <h3 class="f-h1 text-center"><i class="fa fa-shopping-cart" style="color:rgb(248, 15, 34)"></i> ตะกร้าสินค้าของฉัน <i class="fa fa-shopping-cart" style="color:rgb(248, 15, 34)"></i></h3> 
+       <p class="f-h3 text-center">สินค้าทั้งหมดของลูกค้าที่มีอยู่ในตะกร้า  พร้อมยืนยันการสั่งซื้อ</p>
+      <br>
+      <table class="table table-striped">
+            <thead>
+              <tr style= "background: rgb(117, 237, 253)">
+                <!-- <th scope="col">No</th> -->
+                <th scope="col" class="f-h1">เวลาสั่งซื้อล่าสุด</th>
+                <th scope="col" class="f-h1">รหัส</th>
+                <th scope="col" class="f-h1">สินค้า</th>
+                <th scope="col" class="f-h1">ราคา</th>
+                <th scope="col" class="f-h1">จำนวน</th>
+                <th scope="col" class="f-h1">ยอดรวม</th>
+                <th scope="col" class="f-h1">การจัดการ</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for pd in mycart %}
+              <tr>
+                    <!-- <th>{{ pd.count.id }}</th> -->
+                    <td class="f-h3">{{ pd.stamp}}</td>
+                    <td class="f-h3">{{ pd.productid }}</td>
+                    <td class="f-h3">{{ pd.productname }}</td>
+                    <td class="f-h3">{{ pd.price | intcomma }}</td>
+                    <td class="f-h3">{{ pd.quantity }}</td>
+                    <td class="f-h3">{{ pd.total | intcomma }}</td>
+
+                    <th>
+                      <form method="POST" id="form{{ pd.productid }}" onsubmit="return confirm('คุณต้องการลบสินค้าใช่หรือไม่?')">
+                          {% csrf_token %}
+                          <input type="hidden" name="productid" value="{{ pd.productid }}">
+                          <button type="submit" form="form{{ pd.productid }}" class="btn btn-danger f-h3"><i class="fa fa-trash"></i> ลบ</button>
+                      </form>
+                    </th>
+                    
+
+              </tr>
+              {% endfor %}
+
+              <tr class="text-white" style="background-color:#191a19">
+                <td class="f-h1"><h4>ยอดรวมทั้งหมด</h4></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><h4 class="f-h1">{{ count | intcomma }}</h4></td>
+                <td><h4 class="f-h1">{{ total | intcomma }}</h4></td>
+                <td></td>
+                
+              </tr>
+             
+            </tbody>
+          </table>
+
+              <a href="{% url 'mycartedit-page' %}" class="btn btn-success f-h1" style="font-size: 1.2rem;"> <i class="fa fa-edit" style="font-size: 1.5rem;"></i> แก้ไขจำนวนสินค้า</a>
+              
+              <a href="{% url 'checkout-page' %}" class="btn btn-primary f-h1" style="font-size: 1.2rem;" > <i class="fa fa-money" style="font-size: 1.5rem;"></i> ชำระเงิน</a>
+   
+          
+             
+       
+
+
+    </div>
+  </div>
+{% endblock content %}
+
+
+
+
+
+

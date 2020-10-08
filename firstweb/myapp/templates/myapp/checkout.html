@@ -1,0 +1,81 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+    <div class="card border border-success">
+        <div class ="card-header text-center bg-primary text-white f-h1" style="font-size: 2rem;">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                ข้อมูลการจัดส่งสินค้า
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </div>
+        <div class="card-body">
+         <p class="f-h3">กรุณากรอกข้อมูลเพื่อการจัดส่งสินค้า</p>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="name" class="bg-warning f-h3" style="font-size: 1.5rem;">ชื่อ-สกุลผู้รับ :</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="tel" class="bg-success f-h3" style="font-size: 1.5rem;" >เบอร์โทรศัพท์:</label>
+                    <input type="text" class="form-control" id="tel" name="tel">
+                </div>
+
+                <div class="form-group">
+                    <label for="address" class="bg-danger f-h3" style="font-size: 1.5rem;" >ที่อยู่ในการจัดส่ง:</label>
+                    <textarea class="form-control"  rows="3" id="address" name="address" placeholder="ตัวอย่าง : เลขที่ 20 แขวงมักกะสัน เขตราชเทวี กทม 10900"></textarea>
+                </div>
+
+               
+                <label class="bg-secondary f-h3" style="font-size: 1.5rem;">เลือกประเภทการจัดส่ง:</label>
+
+                <div class="form-check">
+                    <label for="ems" class="form-check-label" >
+                        <input type="radio" name="shipping" id="ems" value="ems"> EMS (50 บาท)
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <label for="register" class="form-check-label">
+                        <input type="radio" name="shipping" id="register" value="register"> ลงทะเบียน (35 บาท)
+                    </label>
+                </div>
+
+               
+                <label class="bg-warning f-h3" style="font-size: 1.5rem;">การชำระเงิน:</label>
+                    <div class="form-check">
+                        <label for="transfer" class="form-check-label">
+                            <input type="radio" name="payment" id="transfer" value="transfer">
+                            โอนเงินผ่านบัญชีธนาคาร
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <label for="cod" class="form-check-label">
+                            <input type="radio" name="payment" id="cod" value="cod">
+                            เก็บเงินปลายทาง
+                        </label>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="other" class="bg-primary f-h3" style="font-size: 1.5rem;">หมายเหตุ:</label>
+                        <textarea class="form-control" name="other" id="other" rows="3" placeholder="ใส่เหตุผลที่ต้องการเพิ่มเติม"></textarea>
+                    </div>
+           
+
+                
+                <input type="hidden" name="page" value="information">      
+                <button type="submit" class="btn btn-success f-h3" style="font-size: 1.2rem;"><i class="fa fa-plane" style="font-size: 1.5rem;"></i> ถัดไป</button>
+            </form>
+        </div>
+        
+
+    </div>
+
+  
+</div>
+
+{% endblock content %}

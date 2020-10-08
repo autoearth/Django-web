@@ -1,0 +1,57 @@
+{% extends 'myapp/base.html' %}
+{% load humanize %} 
+
+{% block content %}
+  <div class="card border border-success">
+    <div class="card-body">
+
+       
+      <h3 class="f-h1 text-center text-primary"><i class="fa fa-shopping-cart" style="color:rgb(248, 15, 34)"></i> รายการสั่งซื้อทั้งหมด <i class="fa fa-shopping-cart" style="color:rgb(248, 15, 34)"></i></h3> 
+       <p class="f-h3 text-center">รายการสั่งซื้อทั้งและสถานะการสั่งซื้อ</p>
+      <br>
+      <table class="table table-striped">
+            <thead>
+              <tr style= "background: rgb(117, 237, 253)">
+                <th scope="col" class="f-h1">เวลาสั่งซื้อล่าสุด</th>
+                <th scope="col" class="f-h1">ออร์เดอร์</th>
+                <th scope="col" class="f-h1">ยอดรวม</th>
+                <th scope="col" class="f-h1">สถานะ</th>
+              </tr>
+            </thead>
+            <tbody>
+                
+              <tr>
+                {% for od in allorder %}
+                    <td class="f-h3">{{ od.stamp}}</td>
+                    <td class="f-h3">{{ od.orderid }}</td>
+                    <td class="f-h3">{{ od.total | intcomma }}</td>
+                    <td class="f-h3">
+                        {% if  od.paid %}
+                        <a href="#" class="btn btn-success f-h3"><i class="fa fa-check-square"></i> จ่ายเงินแล้ว</a>
+                        {% else %}
+                            <a href="{% url 'uploadslip-page' od.orderid %}" class="btn btn-primary f-h3"><i class="fa fa-cloud-upload"></i> อัพโหลดสลิป</a>
+                        {% endif %}
+                    </td>
+                    
+
+        
+              </tr>
+              {% endfor %}
+
+            
+            </tbody>
+          </table>
+
+
+       
+
+
+    </div>
+  </div>
+{% endblock content %}
+
+
+
+
+
+
